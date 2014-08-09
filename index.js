@@ -7,8 +7,8 @@ module.exports = function() {
 
             if(!spec) return data;
 
-            if(!typeof spec === 'object') {
-                throw new Error('Invalid spec for ', data.eventId);
+            if(!(typeof spec === 'object')) {
+                throw new Error('Invalid spec');
             }
 
             Object.keys(spec).forEach(function(key) {
