@@ -1,24 +1,24 @@
 {
-    "name": "transposer",
-    "version": "0.0.1",
-    "description": "Jsonpath parser",
-    "main": "index.js",
-    "author": {
-        "name": "Poornima Venkatakrishnan",
-        "email": "poo.leo@gmail.com"
-    },
-    "repository": {
-        "type": "git"
-    },
-    "dependencies": {
-
-    },
-    "devDependencies": {
-        "tape": "^2.4.2"
-    },
-    "scripts": {
-        "test": "tape test/*.js",
-        "cover": "istanbul cover tape -- test/*.js",
-        "lint": "jshint -c .jshintrc index.js lib/ view/"
-    }
+  "name": "transposer",
+  "version": "0.0.1",
+  "description": "Jsonpath parser",
+  "main": "index.js",
+  "author": {
+    "name": "Poornima Venkatakrishnan",
+    "email": "poo.leo@gmail.com"
+  },
+  "repository": {
+    "type": "git"
+  },
+  "dependencies": {
+    "istanbul": "~0.3.0"
+  },
+  "devDependencies": {
+    "tape": "^2.4.2"
+  },
+  "scripts": {
+    "test": "tape tests/*.js",
+    "cover": "istanbul cover tape -- tests/*.js",
+    "lint": "jshint -c .jshintrc index.js lib/"
+  }
 }
