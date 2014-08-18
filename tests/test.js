@@ -3,7 +3,7 @@ var Transposer = require('../lib/transposer'),
     jsonPath = require ('JSONPath'),
     test = require('tape');
 
-test('logger', function (t) {
+test('transposer', function (t) {
 
     t.test('should be able to parse simple object refs', function (t) {
         var obj = {

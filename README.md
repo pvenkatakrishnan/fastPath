@@ -13,6 +13,6 @@ TODO:
 Check the spec here:
 http://goessner.net/articles/JsonPath/
 
-The tape tests have most of the patterns that are already implemented covered.
+The tape tests have most of the patterns that are already implemented.
 
 
