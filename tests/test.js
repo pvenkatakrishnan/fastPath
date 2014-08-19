@@ -231,5 +231,45 @@ test('transposer', function (t) {
         t.deepEqual(tr.eval(obj),  jsonPath.eval(obj, '$.b.h[?(@.foo>12)]'));
         t.end();
     });
+
+    t.test('should test .. operator to look for a specific key', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = new Transposer('$.b..h');
+        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b..h'));
+        t.end();
+    });
+
+    t.test('should test .. operator to look for a specific key', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = new Transposer('$..h');
+        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h'));
+        t.end();
+    });
 });
 
