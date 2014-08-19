@@ -14,7 +14,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.a.b.c');
-        t.deepEqual(tr.eval(obj), ['Found']);
+        //t.deepEqual(tr.eval(obj), ['Found']);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.a.b.c'));
         t.end();
     });
@@ -31,7 +31,7 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.a.*');
 
-        t.deepEqual(tr.eval(obj), [{'h': 'yes'}, [1,2,3], 'no']);
+        //t.deepEqual(tr.eval(obj), [{'h': 'yes'}, [1,2,3], 'no']);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.a.*'));
 
         t.end();
@@ -52,7 +52,7 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.*.blue');
 
-        t.deepEqual(tr.eval(obj), [true, false]);
+        //t.deepEqual(tr.eval(obj), [true, false]);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.*.blue'));
 
         t.end();
@@ -75,7 +75,7 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.*.blue.*');
 
-        t.deepEqual(tr.eval(obj), [ { '1': '2' }, 5, 6, 7 ]);
+        //t.deepEqual(tr.eval(obj), [ { '1': '2' }, 5, 6, 7 ]);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.*.blue.*'));
 
         t.end();
@@ -95,10 +95,10 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.b.h[*]');
 
-        t.deepEqual(tr.eval(obj), [{1: 2},
+        /*t.deepEqual(tr.eval(obj), [{1: 2},
             [3,4,5],
             'blue',
-            true]);
+            true]);*/
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[*]'));
 
         t.end();
@@ -116,7 +116,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[1,2]');
-        t.deepEqual(tr.eval(obj), [[3,4,5],'blue']);
+        //t.deepEqual(tr.eval(obj), [[3,4,5],'blue']);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[1,2]'));
 
         t.end();
@@ -134,7 +134,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[1]');
-        t.deepEqual(tr.eval(obj, '$.b.h[1]'), [[3,4,5]]);
+        //t.deepEqual(tr.eval(obj, '$.b.h[1]'), [[3,4,5]]);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[1]'));
 
         t.end();
@@ -153,7 +153,7 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.b.h[*].foo[*]');
 
-        t.deepEqual(tr.eval(obj), [1,2,3,4,5,6, 'blue']);
+        //t.deepEqual(tr.eval(obj), [1,2,3,4,5,6, 'blue']);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[*].foo[*]'));
 
         t.end();
@@ -171,7 +171,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h.length');
-        t.deepEqual(tr.eval(obj), [4]);
+        //t.deepEqual(tr.eval(obj), [4]);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h.length'));
 
         t.end();
@@ -312,7 +312,7 @@ test('transposer', function (t) {
         t.end();
     });
 
-    /*t.test('should test .. operator with array with *', function(t) {
+    t.test('should test .. operator with array with *', function(t) {
         var obj = {
                 'b': {
                     'h': [
@@ -330,7 +330,7 @@ test('transposer', function (t) {
             tr = new Transposer('$..h[*]');
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[*]'));
         t.end();
-    });*/
+    });
 
     t.test('should test .. operator with array with &', function(t) {
         var obj = {
