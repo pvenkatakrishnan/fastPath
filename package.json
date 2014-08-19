@@ -10,12 +10,11 @@
   "repository": {
     "type": "git"
   },
-  "dependencies": {
-
-  },
+  "dependencies": {},
   "devDependencies": {
     "tape": "^2.4.2",
-    "istanbul": "~0.3.0"
+    "istanbul": "~0.3.0",
+    "lodash": "~2.4.1"
   },
   "scripts": {
     "test": "tape tests/*.js",
