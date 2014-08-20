@@ -22,5 +22,5 @@ The tape tests have most of the patterns supported by the spec.
 
 #### TODOs:
 
-* Metrics: Performance numbers against other json path parsers in use.
+* Metrics: Performance numbers against other popular jsonpath parsers.
 * Optimization: Replace array utility functions with simple loop iterations
