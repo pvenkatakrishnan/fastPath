@@ -29,6 +29,12 @@ test('transposer', function (t) {
                     "title": "The Lord of the Rings",
                     "isbn": "0-395-19395-8",
                     "price": 22.99
+                },
+                { "category": "fiction",
+                    "author": "J K Rowling",
+                    "title": "Harry Potter",
+                    "isbn": "0-395-19395-8",
+                    "price": 22.99
                 }
             ],
                 "bicycle": {
@@ -90,13 +96,13 @@ test('transposer', function (t) {
         t.end();
     });
 
-    /*t.test('should be able to parse simple object refs', function (t) {
+    t.test('should be able to parse simple object refs', function (t) {
 
         var exp = '$..book[-1:]',
             tr = new Transposer(exp);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
         t.end();
-    });*/
+    });
 
     t.test('should be able to parse simple object refs', function (t) {
 
@@ -106,13 +112,13 @@ test('transposer', function (t) {
         t.end();
     });
 
-    /*t.test('should be able to parse simple object refs', function (t) {
+    t.test('should be able to parse simple object refs', function (t) {
 
         var exp = '$..book[:2]',
             tr = new Transposer(exp);
         t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
         t.end();
-    });*/
+    });
 
     t.test('should be able to parse simple object refs', function (t) {
 
@@ -135,6 +141,14 @@ test('transposer', function (t) {
         var exp = '$..*',
             tr = new Transposer(exp);
         t.deepEqual(_.difference(tr.eval(obj), jsonPath.eval(obj, exp)), []);
+        t.end();
+    });
+
+    t.test('should be able to parse simple object refs', function (t) {
+
+        var exp = '$..book[0:5:3]';
+            //tr = new Transposer(exp);
+        console.info(jsonPath.eval(obj, exp));
         t.end();
     });
 
