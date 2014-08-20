@@ -17,10 +17,10 @@ The tape tests have most of the patterns supported by the spec.
 | * | wildcard - All objects/elements regardless their names.|
 | [] | Native array operator |
 | [,] | Jsonpath allows alternate names or array indices |
-| [start:end:step] | Slices subset of the array based on the start, end and step values |
+| [start : end : step] | Slices subset of the array based on the start, end and step values |
 | ?() | applies a filter|
 
-### TODOs:
+#### TODOs:
 
 * Metrics: Performance numbers against other json path parsers in use.
 * Optimization: Remove arr.prototype.<utils> usage and replace with simple loop iterations
