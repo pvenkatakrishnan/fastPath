@@ -146,9 +146,9 @@ test('transposer', function (t) {
 
     t.test('should be able to parse simple object refs', function (t) {
 
-        var exp = '$..book[0:5:3]';
-            //tr = new Transposer(exp);
-        console.info(jsonPath.eval(obj, exp));
+        var exp = '$..book[0:5:3]',
+            tr = new Transposer(exp);
+        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
