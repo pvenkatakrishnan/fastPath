@@ -14,8 +14,8 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.a.b.c');
-        //t.deepEqual(tr.eval(obj), ['Found']);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.a.b.c'));
+        //t.deepEqual(tr.evaluate(obj), ['Found']);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.a.b.c'));
         t.end();
     });
 
@@ -31,8 +31,8 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.a.*');
 
-        //t.deepEqual(tr.eval(obj), [{'h': 'yes'}, [1,2,3], 'no']);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.a.*'));
+        //t.deepEqual(tr.evaluate(obj), [{'h': 'yes'}, [1,2,3], 'no']);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.a.*'));
 
         t.end();
     });
@@ -52,8 +52,8 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.*.blue');
 
-        //t.deepEqual(tr.eval(obj), [true, false]);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.*.blue'));
+        //t.deepEqual(tr.evaluate(obj), [true, false]);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.*.blue'));
 
         t.end();
     });
@@ -75,8 +75,8 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.*.blue.*');
 
-        //t.deepEqual(tr.eval(obj), [ { '1': '2' }, 5, 6, 7 ]);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.*.blue.*'));
+        //t.deepEqual(tr.evaluate(obj), [ { '1': '2' }, 5, 6, 7 ]);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.*.blue.*'));
 
         t.end();
     });
@@ -95,11 +95,11 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.b.h[*]');
 
-        /*t.deepEqual(tr.eval(obj), [{1: 2},
+        /*t.deepEqual(tr.evaluate(obj), [{1: 2},
             [3,4,5],
             'blue',
             true]);*/
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[*]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[*]'));
 
         t.end();
     });
@@ -116,8 +116,8 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[1,2]');
-        //t.deepEqual(tr.eval(obj), [[3,4,5],'blue']);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[1,2]'));
+        //t.deepEqual(tr.evaluate(obj), [[3,4,5],'blue']);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1,2]'));
 
         t.end();
     });
@@ -134,8 +134,8 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[1]');
-        //t.deepEqual(tr.eval(obj, '$.b.h[1]'), [[3,4,5]]);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[1]'));
+        //t.deepEqual(tr.evaluate(obj, '$.b.h[1]'), [[3,4,5]]);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1]'));
 
         t.end();
     });
@@ -153,8 +153,8 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.b.h[*].foo[*]');
 
-        //t.deepEqual(tr.eval(obj), [1,2,3,4,5,6, 'blue']);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[*].foo[*]'));
+        //t.deepEqual(tr.evaluate(obj), [1,2,3,4,5,6, 'blue']);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[*].foo[*]'));
 
         t.end();
     });
@@ -171,8 +171,8 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h.length');
-        //t.deepEqual(tr.eval(obj), [4]);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h.length'));
+        //t.deepEqual(tr.evaluate(obj), [4]);
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h.length'));
 
         t.end();
     });
@@ -190,7 +190,7 @@ test('transposer', function (t) {
             },
             tr = new Transposer('$.b.h[(@.length-2)]');
 
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[(@.length-2)]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[(@.length-2)]'));
         t.end();
     });
 
@@ -206,7 +206,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[?(@.foo)]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[?(@.foo)]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[?(@.foo)]'));
         t.end();
     });
 
@@ -228,7 +228,7 @@ test('transposer', function (t) {
             tr = new Transposer('$.b.h[?(@.foo>12)]');
 
         //it breaks if i have the comparator value is 12.5 (brittle need to fix)
-        t.deepEqual(tr.eval(obj),  jsonPath.eval(obj, '$.b.h[?(@.foo>12)]'));
+        t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, '$.b.h[?(@.foo>12)]'));
         t.end();
     });
 
@@ -248,7 +248,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b..h');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b..h'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b..h'));
         t.end();
     });
 
@@ -268,7 +268,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h'));
         t.end();
     });
 
@@ -288,7 +288,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[1]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[1]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[1]'));
         t.end();
     });
 
@@ -308,7 +308,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[1,2]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[1,2]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[1,2]'));
         t.end();
     });
 
@@ -328,7 +328,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[*]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[*]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[*]'));
         t.end();
     });
 
@@ -348,7 +348,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[?(@.foo)]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[?(@.foo)]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[?(@.foo)]'));
         t.end();
     });
 
@@ -368,7 +368,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[?(@.foo>12)]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[?(@.foo>12)]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[?(@.foo>12)]'));
         t.end();
     });
 
@@ -388,7 +388,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h[@.length-1]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h[@.length-1]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[@.length-1]'));
         t.end();
     });
 
@@ -408,7 +408,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$..h.length');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$..h.length'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h.length'));
         t.end();
     });
 
@@ -428,7 +428,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[:2]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[:2]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[:2]'));
         t.end();
     });
 
@@ -448,7 +448,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[-2:]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[-2:]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[-2:]'));
         t.end();
     });
 
@@ -468,7 +468,7 @@ test('transposer', function (t) {
                 }
             },
             tr = new Transposer('$.b.h[1:5:2]');
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, '$.b.h[1:5:2]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1:5:2]'));
         t.end();
     });
 
