@@ -1,8 +1,8 @@
 'use strict';
 
-var Transposer = require('./lib/transposer');
+var transposer = require('./lib/transposer');
 
 
 exports.create = function create(pattern) {
-    return new Transposer(pattern);
+    return transposer(pattern);
 };

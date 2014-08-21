@@ -1,5 +1,5 @@
 'use strict';
-var Transposer = require('../lib/transposer'),
+var transposer = require('../lib/transposer'),
     jsonPath = require ('JSONPath'),
     test = require('tape'),
     obj = require('./input.json'),
@@ -9,9 +9,9 @@ test('transposer', function (t) {
 
     t.test('.. operator performance', function (t) {
         var pattern = '$..id';
-        t.deepEqual(new Transposer(pattern).eval(obj), jsonPath.eval(obj, pattern));
+        t.deepEqual(transposer(pattern).evaluate(obj), jsonPath.eval(obj, pattern));
 
-        console.log('Avg time for .. op with transposer: %d nanoseconds', timeMe(transposer(pattern))/numIterations);
+        console.log('Avg time for .. op with transposer: %d nanoseconds', timeMe(transpose(pattern))/numIterations);
         console.log('Avg time for .. op with jsonpath: %d nanoseconds', timeMe(jsonpath(pattern))/numIterations);
 
         t.end();
@@ -20,9 +20,9 @@ test('transposer', function (t) {
 
     t.test('wildcard operator performance', function (t) {
         var pattern = '$.*.batters.batter[*]';
-        t.deepEqual(new Transposer(pattern).eval(obj), jsonPath.eval(obj, pattern));
+        t.deepEqual(transposer(pattern).evaluate(obj), jsonPath.eval(obj, pattern));
 
-        console.log('Avg time for * op with transposer: %d nanoseconds', timeMe(transposer(pattern))/numIterations);
+        console.log('Avg time for * op with transposer: %d nanoseconds', timeMe(transpose(pattern))/numIterations);
         console.log('Avg time for * op with jsonpath: %d nanoseconds', timeMe(jsonpath(pattern))/numIterations);
 
         t.end();
@@ -31,9 +31,9 @@ test('transposer', function (t) {
     t.test('conditional performance', function (t) {
 
         var pattern = '$.*.batters.batter[?(@.type=\'Regular\')]';
-        //console.info(new Transposer(pattern).eval(obj));
-        //t.deepEqual(new Transposer(pattern).eval(obj), jsonPath.eval(obj, pattern) );
-        console.log('Avg time for & op with transposer: %d nanoseconds', timeMe(transposer(pattern))/numIterations);
+        //console.info(transposer(pattern).eval(obj));
+        //t.deepEqual(transposer(pattern).eval(obj), jsonPath.eval(obj, pattern) );
+        console.log('Avg time for & op with transposer: %d nanoseconds', timeMe(transpose(pattern))/numIterations);
         console.log('Avg time for & op with jsonpath: %d nanoseconds', timeMe(jsonpath(pattern))/numIterations);
 
         t.end();
@@ -42,18 +42,18 @@ test('transposer', function (t) {
 
 });
 
-function transposer(pattern) {
+function transpose(pattern) {
     var tr, i, parseTime, walkTime ;
     return function() {
         for (i=0; i < numIterations; i++) {
             parseTime = timeMe(function() {
                 return function() {
-                    tr = new Transposer(pattern);
+                    tr = transposer(pattern);
                 }
             });
             walkTime = timeMe(function() {
                 return function() {
-                    tr.eval(obj);
+                    tr.evaluate(obj);
                 }
             });
             //console.log('parseTime:', parseTime, ',walkTime:', walkTime);
