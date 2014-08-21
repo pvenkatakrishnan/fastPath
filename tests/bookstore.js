@@ -48,7 +48,7 @@ test('transposer', function (t) {
 
         var exp = '$.store.book[*].author',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -56,7 +56,7 @@ test('transposer', function (t) {
 
         var exp = '$..author',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -65,7 +65,7 @@ test('transposer', function (t) {
 
         var exp = '$.store.*',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -74,7 +74,7 @@ test('transposer', function (t) {
 
         var exp = '$.store..price',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -83,7 +83,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[2]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -92,7 +92,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[(@.length-1)]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -100,7 +100,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[-1:]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -108,7 +108,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[0,1]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -116,7 +116,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[:2]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -124,7 +124,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[?(@.isbn)]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -132,7 +132,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[?(@.price<10)]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
@@ -140,7 +140,7 @@ test('transposer', function (t) {
 
         var exp = '$..*',
             tr = new Transposer(exp);
-        t.deepEqual(_.difference(tr.eval(obj), jsonPath.eval(obj, exp)), []);
+        t.deepEqual(_.difference(tr.evaluate(obj), jsonPath.eval(obj, exp)), []);
         t.end();
     });
 
@@ -148,7 +148,7 @@ test('transposer', function (t) {
 
         var exp = '$..book[0:5:3]',
             tr = new Transposer(exp);
-        t.deepEqual(tr.eval(obj), jsonPath.eval(obj, exp));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, exp));
         t.end();
     });
 
