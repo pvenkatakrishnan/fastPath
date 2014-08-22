@@ -13,12 +13,12 @@ The tape tests have most of the patterns supported by the spec.
 |  $ |  the root object/element |
 |  @ |  the current object/element |
 |  . or [] | child operator  |
-|  .. | recursive descent|
-| * | wildcard - All objects/elements regardless their names.|
+|  .. | recursive descent |
+| * | wildcard - All objects/elements regardless of their names |
 | [] | Native array operator |
 | [,] | Jsonpath allows alternate names or array indices |
 | [start : end : step] | Slices subset of the array based on the start, end and step values |
-| ?() | applies a filter|
+| ?() | applies a filter |
 
 #### TODOs:
 
