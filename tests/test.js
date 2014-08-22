@@ -14,7 +14,6 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$.a.b.c');
-        //t.deepEqual(tr.evaluate(obj), ['Found']);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.a.b.c'));
         t.end();
     });
@@ -31,9 +30,7 @@ test('transposer', function (t) {
             },
             tr = transposer('$.a.*');
 
-        //t.deepEqual(tr.evaluate(obj), [{'h': 'yes'}, [1,2,3], 'no']);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.a.*'));
-
         t.end();
     });
 
@@ -52,9 +49,7 @@ test('transposer', function (t) {
             },
             tr = transposer('$.*.blue');
 
-        //t.deepEqual(tr.evaluate(obj), [true, false]);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.*.blue'));
-
         t.end();
     });
 
@@ -74,10 +69,7 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$.*.blue.*');
-
-        //t.deepEqual(tr.evaluate(obj), [ { '1': '2' }, 5, 6, 7 ]);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.*.blue.*'));
-
         t.end();
     });
 
@@ -95,12 +87,8 @@ test('transposer', function (t) {
             },
             tr = transposer('$.b.h[*]');
 
-        /*t.deepEqual(tr.evaluate(obj), [{1: 2},
-            [3,4,5],
-            'blue',
-            true]);*/
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[*]'));
 
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[*]'));
         t.end();
     });
 
@@ -116,9 +104,7 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$.b.h[1,2]');
-        //t.deepEqual(tr.evaluate(obj), [[3,4,5],'blue']);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1,2]'));
-
         t.end();
     });
 
@@ -134,9 +120,7 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$.b.h[1]');
-        //t.deepEqual(tr.evaluate(obj, '$.b.h[1]'), [[3,4,5]]);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1]'));
-
         t.end();
     });
 
@@ -153,9 +137,7 @@ test('transposer', function (t) {
             },
             tr = transposer('$.b.h[*].foo[*]');
 
-        //t.deepEqual(tr.evaluate(obj), [1,2,3,4,5,6, 'blue']);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[*].foo[*]'));
-
         t.end();
     });
 
@@ -171,9 +153,7 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$.b.h.length');
-        //t.deepEqual(tr.evaluate(obj), [4]);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h.length'));
-
         t.end();
     });
 
@@ -210,7 +190,7 @@ test('transposer', function (t) {
         t.end();
     });
 
-    t.test('should test conditionals using ? for comparison', function(t) {
+    t.test('should test conditionals using ? for filter with @ first', function(t) {
         var obj = {
                 'b': {
                     'h': [
@@ -227,8 +207,152 @@ test('transposer', function (t) {
             },
             tr = transposer('$.b.h[?(@.foo>12)]');
 
-        //it breaks if i have the comparator value is 12.5 (brittle need to fix)
         t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, '$.b.h[?(@.foo>12)]'));
+        t.end();
+    });
+
+    t.test('should test conditionals using ? for filter with @ after', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: 'b'},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(12 > @.foo)]');
+
+        t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, '$.b.h[?(12 > @.foo)]'));
+        t.end();
+    });
+
+    t.test('should test conditionals using ? for filter with floats', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: 'b'},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(12.2 > @.foo)]');
+
+        t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, '$.b.h[?(12.2 > @.foo)]'));
+        t.end();
+    });
+    t.test('should test conditionals using ? for filter with strings', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: 'b'},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5],
+                        {foo: 'lala', name: 'd'}
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(\'lala\' = @.foo)]');
+
+        //PLEASE SEE!! JSON PATH RETURNS WRONG VALUE !!!!!!!
+
+        t.deepEqual(tr.evaluate(obj),  [{foo: 'lala', name: 'd'}]);
+        t.end();
+    });
+    t.test('should test conditionals using ? for filter with integer parsed from strings', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: 'b'},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5],
+                        {foo: 'lala', name: 'd'}
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(\'12\' > @.foo)]');
+
+        t.deepEqual(tr.evaluate(obj),  [{foo: 11.8, name: 'c'}]);
+        t.end();
+    });
+    t.test('should test .. operator with array length', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[:2]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[:2]'));
+        t.end();
+    });
+
+    t.test('should test .. operator with array length', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[-2:]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[-2:]'));
+        t.end();
+    });
+
+    t.test('should test .. operator with array length', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12.9, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[1:5:2]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1:5:2]'));
         t.end();
     });
 
@@ -368,7 +492,7 @@ test('transposer', function (t) {
                 }
             },
             tr = transposer('$..h[?(@.foo>12)]');
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[?(@.foo>12)]'));
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[?(@.foo > 12)]'));
         t.end();
     });
 
@@ -383,12 +507,15 @@ test('transposer', function (t) {
                         {foo: 11.8, name: 'c'},
                         true,
                         123,
-                        [3,4,5]
+                        [3,4,5],
+                        {h: [1,2,3,4,5]}
                     ]
                 }
             },
-            tr = transposer('$..h[@.length-1]');
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$..h[@.length-1]'));
+            tr = transposer('$..h[(@.length-2)]');
+
+        //PLEASE SEE: JSON Path crashes!!!!!!!!!!!
+        t.deepEqual(tr.evaluate(obj), [ [ 3, 4, 5 ], 4 ]);
         t.end();
     });
 
@@ -412,33 +539,14 @@ test('transposer', function (t) {
         t.end();
     });
 
-    t.test('should test .. operator with array length', function(t) {
-        var obj = {
-                'b': {
-                    'h': [
-                        {foo: [1,2,3]},
-                        {foo: [4,5,6]},
-                        {foo: 12.9, name: 'a'},
-                        {foo: 13.5, name: { 'h': 45}},
-                        {foo: 11.8, name: 'c'},
-                        true,
-                        123,
-                        [3,4,5]
-                    ]
-                }
-            },
-            tr = transposer('$.b.h[:2]');
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[:2]'));
-        t.end();
-    });
 
-    t.test('should test .. operator with array length', function(t) {
+    t.test('should test .. operator with array with conditionals', function(t) {
         var obj = {
                 'b': {
                     'h': [
                         {foo: [1,2,3]},
                         {foo: [4,5,6]},
-                        {foo: 12.9, name: 'a'},
+                        {foo: 12, name: 'a'},
                         {foo: 13.5, name: { 'h': 45}},
                         {foo: 11.8, name: 'c'},
                         true,
@@ -447,28 +555,8 @@ test('transposer', function (t) {
                     ]
                 }
             },
-            tr = transposer('$.b.h[-2:]');
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[-2:]'));
-        t.end();
-    });
-
-    t.test('should test .. operator with array length', function(t) {
-        var obj = {
-                'b': {
-                    'h': [
-                        {foo: [1,2,3]},
-                        {foo: [4,5,6]},
-                        {foo: 12.9, name: 'a'},
-                        {foo: 13.5, name: { 'h': 45}},
-                        {foo: 11.8, name: 'c'},
-                        true,
-                        123,
-                        [3,4,5]
-                    ]
-                }
-            },
-            tr = transposer('$.b.h[1:5:2]');
-        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[1:5:2]'));
+            tr = transposer('$.b.h[?(12 > @.foo)]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[?(12 > @.foo)]'));
         t.end();
     });
 

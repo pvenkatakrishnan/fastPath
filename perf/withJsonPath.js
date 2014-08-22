@@ -3,7 +3,7 @@ var transposer = require('../lib/transposer'),
     jsonPath = require ('JSONPath'),
     test = require('tape'),
     obj = require('./input.json'),
-    numIterations = 10000;
+    numIterations = 1000;
 
 test('transposer', function (t) {
 
