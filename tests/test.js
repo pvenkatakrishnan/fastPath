@@ -560,5 +560,95 @@ test('transposer', function (t) {
         t.end();
     });
 
+    t.test('should test .. operator with array with conditionals', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(12 >= @.foo)]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[?(12 >= @.foo)]'));
+        t.end();
+    });
+
+    t.test('should test .. operator with array with conditionals', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b.h[?(12 <= @.foo)]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b.h[?(12 <= @.foo)]'));
+        t.end();
+    });
+
+    //error cases
+
+    t.test('should test error with invalid pattern', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr;
+        try {
+            tr = transposer('$.b.h[?(12 > @.foo]');
+        } catch(e) {
+            t.deepEqual(e.message, 'Invalid JSONPath');
+        }
+        t.end();
+    });
+
+    t.test('should test error with invalid pattern', function(t) {
+        var obj = {
+                'b': {
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr;
+        try {
+            tr = transposer('$.b.h[?(12 > @.foo)');
+        } catch(e) {
+            t.deepEqual(e.message, 'Invalid JSONPath');
+        }
+        t.end();
+    });
+
 });
 
