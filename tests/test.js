@@ -600,6 +600,41 @@ test('transposer', function (t) {
         t.end();
     });
 
+    //from root patterns.
+    t.test('array at root', function(t) {
+        var obj = [
+                {   'b': 'la',
+                    'c': [
+                        {id: 'a1', val: 1, oldVal: 5},
+                        {id: 'a2', val: 2, oldVal: 1},
+                        {id: 'a3', val: 3, oldVal: 3}
+                    ]
+                },
+                false,
+                1,
+                2
+            ],
+            tr;
+        try{
+            tr = transposer('$[0].c[*].val');
+        } catch(e) {
+            console.info(e.stack);
+        }
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$[0].c[*].val'));
+        t.end();
+    });
+
+    t.test('array at root with conditional', function(t) {
+        var obj = [
+                {id: 'a1', val: 1, oldVal: 5},
+                {id: 'a2', val: 2, oldVal: 1},
+                {id: 'a3', val: 3, oldVal: 3}
+            ],
+            tr = transposer('$[?(@.val <= @.oldVal)]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$[?(@.val <= @.oldVal)]'));
+        t.end();
+    });
+
     //error cases
 
     t.test('should test error with invalid pattern', function(t) {
@@ -649,6 +684,29 @@ test('transposer', function (t) {
         }
         t.end();
     });
+
+    t.test('should test error with invalid pattern', function(t) {
+        var obj = {
+                'b': {
+                    1: 'la',
+                    2: 'boo',
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            tr = transposer('$.b[1,2]');
+        t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, '$.b[1,2]'));
+        t.end();
+    });
+
 
 });
 
