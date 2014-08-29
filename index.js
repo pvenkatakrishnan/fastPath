@@ -1,8 +1,6 @@
 'use strict';
 
-var transposer = require('./lib/transposer');
 
+module.exports =  require('./lib/transposer');
 
-exports.create = function create(pattern) {
-    return transposer(pattern);
-};
+//TODO: support for named patterns

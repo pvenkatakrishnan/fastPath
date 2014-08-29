@@ -1,15 +1,22 @@
 {
   "name": "transposer",
   "version": "0.0.1",
-  "description": "Jsonpath parser",
+  "description": "An optimised Jsonpath parser",
   "main": "index.js",
   "author": {
     "name": "Poornima Venkatakrishnan",
     "email": "poo.leo@gmail.com"
   },
   "repository": {
-    "type": "git"
+    "type": "git",
+    "url": "https://github.com/pvenkatakrishnan/transposer.git"
   },
+
+  "keywords": [
+    "jsonpath",
+    "parser",
+    "json"
+  ],
   "devDependencies": {
     "JSONPath": "^0.10.0",
     "istanbul": "~0.3.0",
