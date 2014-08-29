@@ -20,7 +20,3 @@ The tape tests have most of the patterns supported by the spec.
 | [start : end : step] | Slices subset of the array based on the start, end and step values |
 | ?() | applies a filter |
 
-#### TODOs:
-
-* Metrics: Performance numbers against other popular jsonpath parsers.
-* Optimization: Replace array utility functions with simple loop iterations
