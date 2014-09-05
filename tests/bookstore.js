@@ -1,5 +1,5 @@
 'use strict';
-var transposer = require('../lib/transposer'),
+var transposer = require('../lib/fastPath'),
     jsonPath = require ('JSONPath'),
     test = require('tape'),
     _ = require('lodash');

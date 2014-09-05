@@ -1,5 +1,5 @@
 {
-  "name": "transposer",
+  "name": "fastPath",
   "version": "0.0.1",
   "description": "An optimised Jsonpath parser",
   "main": "index.js",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/pvenkatakrishnan/transposer.git"
+    "url": "https://github.com/pvenkatakrishnan/pastPath.git"
   },
 
   "keywords": [
