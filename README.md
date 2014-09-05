@@ -1,4 +1,4 @@
-transposer [![Build Status](https://travis-ci.org/krakenjs/kraken-devtools.png)](https://travis-ci.org/pvenkatakrishnan/fastPath)
+fastPath [![Build Status](https://travis-ci.org/krakenjs/kraken-devtools.png)](https://travis-ci.org/pvenkatakrishnan/fastPath)
 ==========
 
 An attempt at an optimized jsonpath parser
