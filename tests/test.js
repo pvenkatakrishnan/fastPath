@@ -1,9 +1,9 @@
 'use strict';
-var transposer = require('../index'),
+var fastpath = require('../index'),
     jsonPath = require ('JSONPath'),
     test = require('tape');
 
-test('transposer', function (t) {
+test('fastpath', function (t) {
 
     t.test('should be able to parse simple object refs', function (t) {
         var obj = {
@@ -14,7 +14,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.a.b.c',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -30,7 +30,7 @@ test('transposer', function (t) {
             }
             },
             pattern = '$.a.*',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
@@ -50,7 +50,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.*.blue',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
@@ -72,7 +72,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.*.blue.*',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -90,7 +90,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[*]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
 
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
@@ -109,7 +109,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[1,2]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -126,7 +126,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[1]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -143,7 +143,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[*].foo[*]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
@@ -161,7 +161,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h.length',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -178,7 +178,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[(@.length-2)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
@@ -196,7 +196,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(@.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -217,7 +217,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(@.foo>12)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, pattern));
         t.end();
@@ -239,7 +239,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(12 > @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, pattern));
         t.end();
@@ -261,7 +261,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(12.2 > @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         t.deepEqual(tr.evaluate(obj),  jsonPath.eval(obj, pattern));
         t.end();
@@ -283,7 +283,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(\'lala\' = @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         //JSON PATH RETURNS WRONG VALUE ? maybe?
 
@@ -307,7 +307,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(\'12\' > @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         //JSON PATH RETURNS WRONG VALUE ? maybe?
         t.deepEqual(tr.evaluate(obj),  [{foo: 11.8, name: 'c'}]);
@@ -330,7 +330,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[:2]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -351,7 +351,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[-2:]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -372,7 +372,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[1:5:2]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -393,7 +393,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b..h',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -414,7 +414,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -435,7 +435,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[1]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -456,7 +456,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[1,2]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -477,7 +477,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[*]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -498,7 +498,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[?(@.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -519,7 +519,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[?(@.foo>12)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -541,7 +541,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h[(@.length-2)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
 
         //PLEASE SEE: JSON Path crashes!!!!!!!!!!!
         t.deepEqual(tr.evaluate(obj), [ [ 3, 4, 5 ], 4 ]);
@@ -564,7 +564,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$..h.length',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -586,7 +586,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(12 > @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -607,7 +607,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(12 >= @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -628,7 +628,7 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b.h[?(12 <= @.foo)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -650,7 +650,7 @@ test('transposer', function (t) {
             pattern = '$[0].c[*].val',
             tr;
         try{
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         } catch(e) {
             console.info(e.stack);
         }
@@ -665,7 +665,7 @@ test('transposer', function (t) {
                 {id: 'a3', val: 3, oldVal: 3}
             ],
             pattern = '$[?(@.val <= @.oldVal)]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -690,7 +690,7 @@ test('transposer', function (t) {
             pattern = '$.b.h[?(12 > @.foo]',
             tr;
         try {
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         } catch(e) {
             t.deepEqual(e.message, 'Invalid JSONPath');
         }
@@ -715,14 +715,14 @@ test('transposer', function (t) {
             pattern = '$.b.h[?(12 > @.foo)',
             tr;
         try {
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         } catch(e) {
             t.deepEqual(e.message, 'Invalid JSONPath');
         }
         t.end();
     });
 
-    t.test('should test error with invalid pattern', function(t) {
+    t.test('should test [1, 2] key values but in an obj', function(t) {
         var obj = {
                 'b': {
                     1: 'la',
@@ -740,8 +740,34 @@ test('transposer', function (t) {
                 }
             },
             pattern = '$.b[1,2]',
-            tr = transposer(pattern);
+            tr = fastpath(pattern);
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
+        t.end();
+    });
+
+    t.test('should test named patterns', function(t) {
+        var obj = {
+                'b': {
+                    1: 'la',
+                    2: 'boo',
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            pattern = {
+                foos : '$.b.h[*].foo',
+                strrings: '$.b[1,2]'
+            },
+            tr = fastpath(pattern);
+        t.deepEqual(tr.evaluate(obj), { foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ], strrings: [ 'la', 'boo' ] });
         t.end();
     });
 
