@@ -4,7 +4,7 @@ var fastpath = require('../index'),
     test = require('tape'),
     _ = require('lodash');
 
-test('fastpath', function (t) {
+test('bookstore', function (t) {
 
     var obj = { "store": {
             "book": [

@@ -1,16 +1,14 @@
-'use strict';
+import fastpath from './lib/fastPath';
 
-var fastpath =  require('./lib/fastPath');
-
-module.exports = function(pattern) {
-    var input = {};
-    var output = {};
+export default function fastpather(pattern) {
+    let input = {};
+    let output = {};
     if (typeof pattern === 'string') {
         //simple string patterns
         return fastpath(pattern);
     } else {
         //named patterns
-        var keys = Object.keys(pattern);
+        let keys = Object.keys(pattern);
         keys.forEach(function(key) {
             input[key] = fastpath(pattern[key]);
         });

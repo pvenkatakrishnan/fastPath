@@ -3,7 +3,7 @@ var fastpath = require('../index'),
     jsonPath = require ('JSONPath'),
     test = require('tape');
 
-test('fastpath', function (t) {
+test('fastpath-tests', function (t) {
 
     t.test('should be able to parse simple object refs', function (t) {
         var obj = {
