@@ -7,6 +7,10 @@
     "name": "Poornima Venkatakrishnan",
     "email": "poo.leo@gmail.com"
   },
+  "directories": {
+    "test": "test",
+    "dist": "dist"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/pvenkatakrishnan/fastPath.git"
