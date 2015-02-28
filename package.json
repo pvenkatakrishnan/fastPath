@@ -27,8 +27,6 @@
   },
   "scripts": {
     "compile": "babel --optional selfContained --modules common --out-dir dist index.js lib/**.js",
-    "test": "npm run compile && babel-node tests/harness.js tests/**/*.js",
-    "cover": "istanbul cover tape -- tests/*.js",
-    "lint": "jshint -c .jshintrc index.js lib/"
+    "test": "npm run compile && babel-node tests/harness.js tests/**/*.js"
   }
 }
