@@ -9,15 +9,10 @@ export default function fastpather(pattern) {
     } else {
         //named patterns
         let keys = Object.keys(pattern);
-        keys.forEach(function(key) {
-            input[key] = fastpath(pattern[key]);
-        });
-
+        keys.forEach(key =>  input[key] = fastpath(pattern[key]));
         return {
             evaluate: function(obj) {
-                keys.forEach(function(key) {
-                    output[key] = input[key].evaluate(obj);
-                });
+                keys.forEach(key => output[key] = input[key].evaluate(obj));
                 return output;
             }
         };
