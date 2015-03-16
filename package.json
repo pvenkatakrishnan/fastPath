@@ -30,7 +30,7 @@
     "tape": "^2.4.2"
   },
   "scripts": {
-    "compile": "babel --optional selfContained --modules common --out-dir dist index.js lib/**.js",
+    "compile": "babel --optional runtime --modules common --out-dir dist index.js lib/**.js",
     "prepublish": "npm run compile",
     "test": "npm run compile && babel-node tests/harness.js tests/**/*.js",
     "cover": "npm run compile && babel-node node_modules/.bin/istanbul cover tests/harness.js tests/**/*-test.js"
