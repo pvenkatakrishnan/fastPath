@@ -1,6 +1,6 @@
 {
   "name": "fastpath",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An optimised Jsonpath parser",
   "main": "index.js",
   "author": {
