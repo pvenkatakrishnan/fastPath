@@ -22,7 +22,7 @@
   ],
   "devDependencies": {
     "JSONPath": "^0.10.0",
-    "babel": "^4.6.0",
+    "babel": "4.7.3",
     "glob": "^4.4.1",
     "istanbul": "^0.3.0",
     "jshint": "^2.5.4",
@@ -33,5 +33,8 @@
     "compile": "babel --optional selfContained --modules common --out-dir dist index.js lib/**.js",
     "test": "npm run compile && babel-node tests/harness.js tests/**/*.js",
     "cover": "npm run compile && babel-node node_modules/.bin/istanbul cover tests/harness.js tests/**/*-test.js"
+  },
+  "dependencies": {
+    "babel-runtime": "4.7.3"
   }
 }
