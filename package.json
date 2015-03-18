@@ -2,7 +2,7 @@
   "name": "fastpath",
   "version": "1.0.6",
   "description": "An optimised Jsonpath parser",
-  "main": "index.js",
+  "main": "dist/index.js",
   "author": {
     "name": "Poornima Venkatakrishnan",
     "email": "poo.leo@gmail.com"
