@@ -648,12 +648,7 @@ test('fastpath-tests', function (t) {
                 2
             ],
             pattern = '$[0].c[*].val',
-            tr;
-        try{
             tr = fastpath(pattern);
-        } catch(e) {
-            console.info(e.stack);
-        }
         t.deepEqual(tr.evaluate(obj), jsonPath.eval(obj, pattern));
         t.end();
     });
@@ -687,12 +682,13 @@ test('fastpath-tests', function (t) {
                     ]
                 }
             },
-            pattern = '$.b.h[?(12 > @.foo]',
-            tr;
+            pattern = '$.b.h[?(12 > @.foo]';
+
         try {
-            tr = fastpath(pattern);
+            fastpath(pattern).evaluate(obj);
+            throw new Error("This test case should fail");
         } catch(e) {
-            t.deepEqual(e.message, 'Invalid JSONPath');
+            t.is(e.message, 'Invalid JSONPath');
         }
         t.end();
     });
@@ -712,12 +708,13 @@ test('fastpath-tests', function (t) {
                     ]
                 }
             },
-            pattern = '$.b.h[?(12 > @.foo)',
-            tr;
+            pattern = '$.b.h[?(12 > @.foo)';
+
         try {
-            tr = fastpath(pattern);
+            fastpath(pattern).evaluate(obj);
+            throw new Error("This test case should fail");
         } catch(e) {
-            t.deepEqual(e.message, 'Invalid JSONPath');
+            t.is(e.message, 'Invalid JSONPath');
         }
         t.end();
     });
