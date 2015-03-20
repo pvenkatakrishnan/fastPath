@@ -1,5 +1,5 @@
 'use strict';
-var fastpath = require('../index'),
+var fastpath = require('../dist/index'),
     jsonPath = require ('JSONPath'),
     test = require('tape');
 
