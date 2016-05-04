@@ -796,13 +796,81 @@ test('fastpath-tests', function (t) {
                 },
                 results2: {
                     strrings: '$.b[1,2]'
-                }
+                },
+                constant: 5
             },
             tr = fastpath(pattern);
-        t.deepEqual(tr.evaluate(obj), { results1: {foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ]}, results2: { strrings: [ 'la', 'boo' ] }});
+        t.deepEqual(tr.evaluate(obj), { results1: {foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ]}, results2: { strrings: [ 'la', 'boo' ] }, constant: 5});
         t.end();
     });
 
+    t.test('should test a more realistic trimming', function(t) {
+        var obj = {
+                users: [
+                    {
+                        name: 'A',
+                        age: 15,
+                        type: 'personal'
+                    },
+                    {
+                        name: 'B',
+                        age: 35,
+                        type: 'business'
 
+                    },
+                    {
+                        name: 'C',
+                        age: 25,
+                        type: 'hybrid'
+                    },
+                    {
+                        name: 'D',
+                        age: 23,
+                        type: 'personal'
+                    },
+                    {
+                        name: 'D',
+                        age: 15,
+                        type: 'personal'
+                    },
+                    {
+                        name: 'D',
+                        age: 16,
+                        type: 'personal'
+                    }
+                ]
+            },
+            pattern = {
+                results: {
+                    younglings : '$.users[?(17 >= @.age)]'
+                },
+                maxage: 17
+            },
+            tr = fastpath(pattern);
+        t.deepEqual(tr.evaluate(obj), {
+
+            results: {
+                younglings: [
+                    {
+                        name: 'A',
+                        age: 15,
+                        type: 'personal'
+                    },
+                    {
+                        name: 'D',
+                        age: 15,
+                        type: 'personal'
+                    },
+                    {
+                        name: 'D',
+                        age: 16,
+                        type: 'personal'
+                    }
+                ]
+            },
+            maxage: 17
+        });
+        t.end();
+    });
 });
 
