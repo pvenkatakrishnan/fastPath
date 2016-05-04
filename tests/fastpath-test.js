@@ -799,8 +799,6 @@ test('fastpath-tests', function (t) {
                 }
             },
             tr = fastpath(pattern);
-
-        console.info('tr,', tr);
         t.deepEqual(tr.evaluate(obj), { results1: {foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ]}, results2: { strrings: [ 'la', 'boo' ] }});
         t.end();
     });
