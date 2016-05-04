@@ -14,7 +14,6 @@ export default function fastpather(pattern) {
 
 function traverse(object) {
     let keys = Object.keys(object);
-    console.info('object before', object);
     keys.forEach(function(entry) {
         if (typeof object[entry] === 'object') {
             traverse(object[entry]);
