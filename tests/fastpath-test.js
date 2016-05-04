@@ -763,13 +763,17 @@ test('fastpath-tests', function (t) {
                 }
             },
             pattern = {
-                foos : '$.b.h[*].foo',
-                strrings: '$.b[1,2]'
+                pattern1 : '$.b.h[*].foo',
+                pattern2: '$.b[1,2]',
+                pattern3: '$.b.2'
             },
             tr = fastpath(pattern);
 
-            console.info('tr,', tr);
-        t.deepEqual(tr.evaluate(obj), { foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ], strrings: [ 'la', 'boo' ] });
+        t.deepEqual(tr.evaluate(obj), {
+            pattern1: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ],
+            pattern2: [ 'la', 'boo' ],
+            pattern3: ['boo']
+        });
         t.end();
     });
 
