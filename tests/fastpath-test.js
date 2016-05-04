@@ -767,7 +767,41 @@ test('fastpath-tests', function (t) {
                 strrings: '$.b[1,2]'
             },
             tr = fastpath(pattern);
+
+            console.info('tr,', tr);
         t.deepEqual(tr.evaluate(obj), { foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ], strrings: [ 'la', 'boo' ] });
+        t.end();
+    });
+
+    t.test('should test nested name patterns', function(t) {
+        var obj = {
+                'b': {
+                    1: 'la',
+                    2: 'boo',
+                    'h': [
+                        {foo: [1,2,3]},
+                        {foo: [4,5,6]},
+                        {foo: 12, name: 'a'},
+                        {foo: 13.5, name: { 'h': 45}},
+                        {foo: 11.8, name: 'c'},
+                        true,
+                        123,
+                        [3,4,5]
+                    ]
+                }
+            },
+            pattern = {
+                results1: {
+                    foos : '$.b.h[*].foo'
+                },
+                results2: {
+                    strrings: '$.b[1,2]'
+                }
+            },
+            tr = fastpath(pattern);
+
+        console.info('tr,', tr);
+        t.deepEqual(tr.evaluate(obj), { results1: {foos: [ [ 1, 2, 3 ], [ 4, 5, 6 ], 12, 13.5, 11.8 ]}, results2: { strrings: [ 'la', 'boo' ] }});
         t.end();
     });
 
